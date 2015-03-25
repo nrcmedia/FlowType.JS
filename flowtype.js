@@ -14,7 +14,7 @@
 
 var fastdom = require('fastdom');
 
-(function($) {
+module.exports = function($) {
    $.fn.flowtype = function(options) {
 
 // Establish default settings/variables
@@ -53,4 +53,4 @@ var fastdom = require('fastdom');
          changes(this);
       });
    };
-}(jQuery));
+};
