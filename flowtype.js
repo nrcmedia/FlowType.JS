@@ -10,6 +10,10 @@
 * Thanks to Giovanni Difeterici (http://www.gdifeterici.com/)
 */
 
+'use strict';
+
+var fastdom = require('fastdom');
+
 (function($) {
    $.fn.flowtype = function(options) {
 
@@ -26,12 +30,16 @@
 // Do the magic math
 // =================
       changes = function(el) {
-         var $el = $(el),
-            elw = $el.width(),
-            width = elw > settings.maximum ? settings.maximum : elw < settings.minimum ? settings.minimum : elw,
-            fontBase = width / settings.fontRatio,
-            fontSize = fontBase > settings.maxFont ? settings.maxFont : fontBase < settings.minFont ? settings.minFont : fontBase;
-         $el.css('font-size', fontSize + 'px');
+        fastdom.read(function() {
+          var $el = $(el),
+              elw = $el.width(),
+              width = elw > settings.maximum ? settings.maximum : elw < settings.minimum ? settings.minimum : elw,
+              fontBase = width / settings.fontRatio,
+              fontSize = fontBase > settings.maxFont ? settings.maxFont : fontBase < settings.minFont ? settings.minFont : fontBase;
+          fastdom.write(function() {
+            $el.css('font-size', fontSize + 'px');
+          });
+        });
       };
 
 // Make the magic visible
